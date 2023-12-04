@@ -32,3 +32,5 @@ To order a pizza, make a POST request to `/pizzas` with a JSON array of toppings
     "Pepperoni",
     "Onions"
 ]
+
+## Postman Collection included
