@@ -3,83 +3,84 @@ package com.jeanpfe.challenge.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+import java.util.Iterator;
+
+@Component
 public class Inventory {
-    private List<String> availableToppings;
+    private List<Topping> availableToppings;
     private List<String> availableBases;
     private List<String> availableCheeses;
     private List<String> availableSauces;
 
+    /**
+     * Constructs a new Inventory object with default available toppings, bases, cheeses, and sauces.
+     */
     public Inventory() {
-        this.availableToppings = new ArrayList<>();
-        this.availableBases = new ArrayList<>();
-        this.availableCheeses = new ArrayList<>();
-        this.availableSauces = new ArrayList<>();
+        this.availableToppings = new ArrayList<>(List.of(
+            new Topping("Pepperoni", 1.5),
+            new Topping("Mushrooms", 1.0),
+            new Topping("Onions", 1.0)
+        ));
+        this.availableBases = new ArrayList<>(List.of("Regular"));
+        this.availableCheeses = new ArrayList<>(List.of("Mozzarella"));
+        this.availableSauces = new ArrayList<>(List.of("Tomato"));
     }
 
-    public void addTopping(String topping) {
+    /**
+     * Adds a new topping to the available toppings list.
+     *
+     * @param topping the topping to be added
+     */
+    public void addTopping(Topping topping) {
         this.availableToppings.add(topping);
     }
 
-    public void removeTopping(String topping) {
-        this.availableToppings.remove(topping);
-    }
-    public void addBase(String base) {
-        this.availableBases.add(base);
-    }
-
-    public void removeBase(String base) {
-        this.availableBases.remove(base);
-    }
-
-    public void addCheese(String cheese) {
-        this.availableCheeses.add(cheese);
-    }
-
-    public void removeCheese(String cheese) {
-        this.availableCheeses.remove(cheese);
+    /**
+     * Removes a topping from the available toppings list.
+     *
+     * @param toppingToRemove the name of the topping to be removed
+     */
+    public void removeTopping(String toppingToRemove) {
+        Iterator<Topping> iterator = this.availableToppings.iterator();
+        while (iterator.hasNext()) {
+            Topping topping = iterator.next();
+            if (topping.getName().equals(toppingToRemove)) {
+                iterator.remove();
+            }
+        }
     }
 
-    public void addSauce(String sauce) {
-        this.availableSauces.add(sauce);
-    }
-
-    public void removeSauce(String sauce) {
-        this.availableSauces.remove(sauce);
-    }
-
-    // getters and setters for availableToppings
-    public List<String> getAvailableToppings() {
+    /**
+     * Returns the list of available toppings.
+     *
+     * @return the list of available toppings
+     */
+    public List<Topping> getAvailableToppings() {
         return availableToppings;
     }
 
-    public void setAvailableToppings(List<String> availableToppings) {
+    /**
+     * Sets the list of available toppings.
+     *
+     * @param availableToppings the list of available toppings to be set
+     */
+    public void setAvailableToppings(List<Topping> availableToppings) {
         this.availableToppings = availableToppings;
     }
 
-    // getters and setters for availableBases
-    public List<String> getAvailableBases() {
-        return availableBases;
-    }
-
-    public void setAvailableBases(List<String> availableBases) {
-        this.availableBases = availableBases;
-    }
-
-    // getters and setters for availableCheeses
-    public List<String> getAvailableCheeses() {
-        return availableCheeses;
-    }
-
-    public void setAvailableCheeses(List<String> availableCheeses) {
-        this.availableCheeses = availableCheeses;
-    }
-
-    // getters and setters for availableSauces
-    public List<String> getAvailableSauces() {
-        return availableSauces;
-    }
-
-    public void setAvailableSauces(List<String> availableSauces) {
-        this.availableSauces = availableSauces;
+    /**
+     * Updates the name and price of a topping in the available toppings list.
+     *
+     * @param topicToDeleteName the name of the topping to be updated
+     * @param newTopping the new topping object with updated name and price
+     */
+    public void updateTopping(String topicToDeleteName, Topping newTopping) {
+        for (Topping topping : this.availableToppings) {
+            if (topping.getName().equals(topicToDeleteName)) {
+                topping.setName(newTopping.getName());
+                topping.setPrice(newTopping.getPrice());
+            }
+        }
     }
 }
